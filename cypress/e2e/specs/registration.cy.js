@@ -1,23 +1,29 @@
 /// <reference types="cypress" />
 
 describe('google.ba tests', () => {
-  beforeEach(() => {
-  
+ let email
+ beforeEach(() => {
+  email=`sanela${Date.now()}@gmail.com`
     cy.visit('/')
   })
+  afterEach(() => {
+  })
 
-  it('Registration flow', () => {
+
+  it('Successful registration flow', () => {
+    console.log(email)
+
     cy.get('#slider-carousel').should('be.visible')
-    cy.get('[href="/login"').click()
+    cy.get('a[href="/login"').click()
     
     cy.get('form').find('[data-qa="signup-name"]').clear().type('Sanela')
-    cy.get('[data-qa="signup-email"]').clear().type('testing25@gmail.com')
+    cy.get('[data-qa="signup-email"]').clear().type(email)
     cy.get('[data-qa="signup-button"]').click()
 
     cy.get('input[type="radio"]').check('Mrs')
     
     cy.get('[data-qa="name"]').should('have.value', 'Sanela')
-    cy.get('[data-qa="email"]').should('have.value', 'testing25@gmail.com').and('be.disabled')
+    cy.get('[data-qa="email"]').should('have.value', email).and('be.disabled')
 
     cy.get('[data-qa="password"]').type('testingtesting')
     cy.get('[data-qa="days"]').select(7)
@@ -41,6 +47,22 @@ describe('google.ba tests', () => {
     cy.get('#mobile_number').type('123 123 123 123')
 
     cy.get('[data-qa="create-account"]').click()
+
+    cy.get('[data-qa="account-created"]').should('be.visible').and('have.text','Account Created!')
+
+    
+  
+  })
+  it('Registration with blank password field', () => {
+  
+
+    cy.get('#slider-carousel').should('be.visible')
+    cy.get('a[href="/login"').click()
+    
+    cy.get('form').find('[data-qa="signup-name"]').clear().type('Sanela')
+    cy.get('[data-qa="signup-email"]').clear().type(email)
+    cy.get('[data-qa="signup-button"]').click()
+    cy.get('[data-qa="create-account"]').click()
+    cy.get("input:invalid").should("have.length.gt",0).and('be.visible')
   })
 })
-
