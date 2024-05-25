@@ -48,7 +48,9 @@ describe('google.ba tests', () => {
 
     cy.get('[data-qa="create-account"]').click()
 
-    cy.get('[data-qa="account-created"]').should('be.visible').and('have.text','Account Created!')
+    cy.get('[data-qa="account-created"]')
+    .should('be.visible')
+    .and('have.text','Account Created!')
 
     
   
@@ -64,5 +66,17 @@ describe('google.ba tests', () => {
     cy.get('[data-qa="signup-button"]').click()
     cy.get('[data-qa="create-account"]').click()
     cy.get("input:invalid").should("have.length.gt",0).and('be.visible')
+
+
+    cy.get("input:invalid")
+    .invoke('prop', 'validationMessager')
+    .should('equal', "Please fill aut this filed")
+
+
+    cy.get('[data-qa="password"]').then(($input)=> {
+      expect($input[0].validationMessager).to.include(
+        'Please fill aut this filed'
+      )
+    })
   })
 })

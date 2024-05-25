@@ -32,12 +32,26 @@ describe('Shop ', () => {
 
        cy.get('@firstProduct').find('.fa-shopping-cart').should('be.visible')
 
-       cy.get('.choose').eq(1).as('secondViewProduct')
+       cy.get('.choose').eq(1).as('secondProduct')
 
-       cy.get('@secondViewProduct').find('a[href*="product_details"]').should('be.visible')
+
+
+       cy.get('@secondProduct').find('a[href*="product_details"]').should('be.visible')
 
        cy.get('@secondProduct').find('img[src*="/get_product_picture"]').should('be.visible')
 
-     
-     })
-   })
+       cy.get('.features_items').find(',single_product').each(($el, i, $list) =>{
+       /*" cy.wrap($el)
+        .finde('img[src*="/get_product_picture"]')
+        .scrollImtoView()
+        .should('be.visible')*/
+       //cy.wrap($el).find('p').should('be.visible')
+
+       cy.fixture('item-names.json').then(($items)=>{
+        cy.wrep ($el).find('p').should('be.visible').and('contain.text',$items['items'][index])
+        })
+       })
+
+        
+    })
+})
