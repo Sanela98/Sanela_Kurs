@@ -75,27 +75,29 @@ it('Successful registration flow', () => {
 
     cy.get('input:invalid').should('have.length.gt', 0).and('be.visible')
 
-    cy.get('input:invalid').invoke('prop', 'validationMessage').should('equal', 'Please fill out this filed.')
+    cy.get('input:invalid').invoke('prop', 'validationMessage').should('equal', 'Please fill out this field.')
 
     cy.get('[data-qa="password"]').then(($input)=> {
-    expect($input[0].validationMessage).to.include('Please fill aut this filed.')
+    expect($input[0].validationMessage).to.include('Please fill out this field.')
     })
   
 
-    it('Try to access registration form with invalid email format version2',()=>{
+     
+  })
 
-      cy.get('#slider-carousel').should('be.visible')
-      
-      cy.get('a[href="/login"').click()
+  it('Try to access registration form with invalid email format',()=>{
 
-      cy.get('form').find('[date-qa="signup-name"]'.clear().type('Sanela'))
+    cy.get('#slider-carousel').should('be.visible')
+    
+    cy.get('a[href="/login"').click()
 
-      cy.get('[data-qa="signup-email"]').clear().type(invalidEmail)
+    cy.get('form').find('[data-qa="signup-name"]').clear().type('Sanela')
 
-      cy.get('[data-qa="signup-email"]').then(($input)=>{
-        expect($input[0].validationMessage).to.include(`please include an '@' in the email addres. '${invalidEmail}' is missing an '@' .`)
-      }) 
-  })     
+    cy.get('[data-qa="signup-email"]').clear().type(invalidEmail)
+
+    cy.get('[data-qa="signup-email"]').then(($input)=>{
+      expect($input[0].validationMessage).to.include(`Please include an '@' in the email address. '${invalidEmail}' is missing an '@'.`)
+    })     
 })    
 })
  
