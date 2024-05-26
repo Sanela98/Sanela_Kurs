@@ -3,6 +3,8 @@
 describe('login', () => {
 
       let email
+      let unexsistingUserEmail
+      const password = 'testingtesting'
 
       before(()=>{
         email =`sanela${Date.now()}@gmail.com`
@@ -60,7 +62,8 @@ describe('login', () => {
   })
 
 
-  it('successfull login with existing user', () => {
+    it('successfull login with existing user', () => {
+    
 
     cy.get('#slider-carousel').should('be.visible')
 
@@ -70,15 +73,31 @@ describe('login', () => {
 
     cy.get('[data-qa="login-email"]').clear().type(email)
 
-    cy.get('[data-qa="login-password"]').clear().type('testingtesting')
+    cy.get('[data-qa="login-password"]').clear().type('password')
 
     cy.get('[data-qa="login-button"]').click()
 
     cy.contains('Logged in as Sanela').should ('be.visible')
+ 
+  })
 
+    it('user tries to log in with inccorect password', () => {
+    cy.visit('/')
+    cy.get('#slider-carousel').should('be.visible')
 
-   
+    cy.get('a[href="/login"]').click()
 
-  
+    cy.get('.login-form').should('be.visible')
+
+    cy.get('[data-qa="login-email"]').clear().type(email)
+
+    cy.get('[data-qa="login-password"]').clear().type('password')
+
+    cy.get('[data-qa="login-button"]').click()
+
+    cy.get('@erronmessagerlogin').should
+
   })
 })
+
+
