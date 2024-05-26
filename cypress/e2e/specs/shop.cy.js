@@ -34,9 +34,25 @@ describe('Shop ', () => {
 
        cy.get('.choose').eq(1).as('secondViewProduct')
 
-       cy.get('@secondViewProduct').find('a[href*="product_details"]').should('be.visible')
 
-       cy.get('@secondProduct').find('img[src*="/get_product_picture"]').should('be.visible')
+
+       cy.get('@secondViewProduct')
+       .find('a[href*="product_details"]')
+  
+       .should('be.visible')
+
+       cy.get('@secondProduct')
+       .find('img[src*="/get_product_picture"]')
+       .should('be.visible')
+
+
+       cy.get('faktures_itmes')
+       .find('.single-product')
+       .each($el,index,$list) =>{
+        
+       }
+
+       
 
        cy.get('.features_items').find('.single-products').each(($el, index, $list) =>{
         cy.wrap($el).find('p').should('be.visible')
