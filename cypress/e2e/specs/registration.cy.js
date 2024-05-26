@@ -82,7 +82,7 @@ it('Successful registration flow', () => {
     })
   
 
-    it('Try to access registration form with invalid email format',()=>{
+    it('Try to access registration form with invalid email format version2',()=>{
 
       cy.get('#slider-carousel').should('be.visible')
       
