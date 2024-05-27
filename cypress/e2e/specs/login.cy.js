@@ -1,88 +1,82 @@
 /// <reference types="cypress" />
 
-describe('login', () => {
+describe('Login', () => {
+  let email
+  let unexistingUserEmail
+  const password = 'Test123'
 
-      let email
-      let unexsistingUserEmail
-      const password = 'testingtesting'
-
-      before(()=>{
-        email =`sanela${Date.now()}@gmail.com`
-        cy.visit('/')
-
-        cy.get('#slider-carousel').should('be.visible')
-        cy.get('a[href="/login"').click()
-        
-        cy.get('form').find('[data-qa="signup-name"]').clear().type('Sanela')
-        cy.get('[data-qa="signup-email"]').clear().type(email)
-        cy.get('[data-qa="signup-button"]').click()
-    
-        cy.get('input[type="radio"]').check('Mrs')
-        
-        cy.get('[data-qa="name"]').should('have.value', 'Sanela')
-        cy.get('[data-qa="email"]').should('have.value', email).and('be.disabled')
-    
-        cy.get('[data-qa="password"]').type('testingtesting')
-        cy.get('[data-qa="days"]').select(7)
-        cy.get('[data-qa="months"]').select('May')
-        cy.get('[data-qa="years"]').select('2000')
-        
-        cy.get('#newsletter').check()
-        cy.get('#optin').check()
-    
-        cy.get('#first_name').clear().type('Sanela').should('have.value', 'Sanela')
-        cy.get('#last_name').clear().type('Babovic').should('have.value', 'Babovic')
-        cy.get('#company').should('be.empty')
-    
-        cy.get('#address1').type('test ulica 23')
-        cy.get('#address2').should('be.empty')
-    
-        cy.get('[data-qa="country"]').select('Canada')
-        cy.get('#state').type('Bosnia')
-        cy.get('#city').type('Sarajevo')
-        cy.get('#zipcode').type('71000')
-        cy.get('#mobile_number').type('123 123 123 123')
-    
-        cy.get('[data-qa="create-account"]').click()
-    
-        cy.get('[data-qa="account-created"]').should('be.visible').and('have.text','Account Created!')
-
-        cy.get('[data-qa="continue-button"]').click()
-
-        cy.get('a[href="/logout"]').click()
-    
-      })
-
-      beforeEach(() => {
-      cy.visit('/')
-      })
-  
-      afterEach(() => {
-
+  before(() => {
+    email = `aid${Date.now()}@example.com`
+    unexistingUserEmail = `unexisting${Date.now()}@example.com`
   })
 
-
-    it('successfull login with existing user', () => {
-    
-
-    cy.get('#slider-carousel').should('be.visible')
-
-    cy.get('a[href="/login"]').click()
-
-    cy.get('.login-form').should('be.visible')
-
-    cy.get('[data-qa="login-email"]').clear().type(email)
-
-    cy.get('[data-qa="login-password"]').clear().type('password')
-
-    cy.get('[data-qa="login-button"]').click()
-
-    cy.contains('Logged in as Sanela').should ('be.visible')
- 
-  })
-
-    it('user tries to log in with inccorect password', () => {
+  beforeEach(() => {
     cy.visit('/')
+
+    cy.get('#slider-carousel').should('be.visible')
+    // Given - user has existing account
+    cy.get('a[href="/login"]').click()
+
+    cy.get('form').find('[data-qa="signup-name"]').clear().type('Aid')
+
+    cy.get('[data-qa="signup-email"]').clear().type(email)
+
+    cy.get('[data-qa="signup-button"]').click()
+
+    cy.get('input[type="radio"]').check('Mr')
+
+    cy.get('[data-qa="name"]').should('have.value', 'Aid')
+
+    cy.get('[data-qa="email"]').should('have.value', email).and('be.disabled')
+
+    cy.get('[data-qa="password"]').type(password)
+
+    cy.get('[data-qa="days"]').select(13)
+
+    cy.get('[data-qa="months"]').select('July')
+
+    cy.get('[data-qa="years"]').select('1997')
+
+    cy.get('#newsletter').check()
+
+    cy.get('#optin').check()
+
+    cy.get('[data-qa="first_name"]').clear().type('Aid')
+
+    cy.get('[data-qa="last_name"]').clear().type('Hodzic')
+
+    cy.get('[data-qa="company"]').clear().type('QA')
+
+    cy.get('[data-qa="address"]').clear().type('Zmaja od Bosne')
+
+    cy.get('[data-qa="address2"]').clear().type('Zmaja od Bosne')
+
+    cy.get('[data-qa="country"]').select('Canada')
+
+    cy.get('[data-qa="state"]').clear().type('Sarajevo')
+
+    cy.get('[data-qa="city"]').clear().type('Sarajevo')
+
+    cy.get('[data-qa="zipcode"]').clear().type('71000')
+
+    cy.get('[data-qa="mobile_number"]').clear().type('061123123')
+
+    cy.get('[data-qa="create-account"]').click()
+
+    cy.get('[data-qa="account-created"]')
+      .should('be.visible')
+      .and('have.text', 'Account Created!')
+
+    cy.get('[data-qa="continue-button"]').click()
+
+    cy.get('a[href="/logout"]').click()
+  })
+
+  afterEach(() => {})
+
+  it('Successfull login with existing user', () => {
+    cy.visit('/')
+
     cy.get('#slider-carousel').should('be.visible')
 
     cy.get('a[href="/login"]').click()
@@ -91,13 +85,62 @@ describe('login', () => {
 
     cy.get('[data-qa="login-email"]').clear().type(email)
 
-    cy.get('[data-qa="login-password"]').clear().type('password')
+    cy.get('[data-qa="login-password"]').clear().type(password)
 
     cy.get('[data-qa="login-button"]').click()
 
-    cy.get('@erronmessagerlogin').should
+    cy.contains('Logged in as Aid').should('be.visible')
+  })
 
+  it('User tries to log in with inccorect passowrd', () => {
+    cy.visit('/')
+
+    cy.get('#slider-carousel').should('be.visible')
+
+    cy.get('a[href="/login"]').click()
+
+    cy.get('.login-form').should('be.visible')
+
+    cy.get('[data-qa="login-email"]').clear().type(email)
+
+    cy.get('[data-qa="login-password"]').clear().type(`${password}12345`)
+
+    cy.get('[data-qa="login-button"]').click()
+
+    cy.get('form[action="/login"]')
+      .find('p[style="color: red;"]')
+      .should('be.visible')
+      .as('errorMessageLogin')
+
+    cy.get('@errorMessageLogin').should(
+      'contain.text',
+      'Your email or password is incorrect!'
+    )
+  })
+
+  it('User tries to login with unexisting email', () => {
+    cy.visit('/')
+
+    cy.get('#slider-carousel').should('be.visible')
+
+    cy.get('a[href="/login"]').click()
+
+    cy.get('.login-form').should('be.visible')
+
+    cy.get('[data-qa="login-email"]').clear().type(unexistingUserEmail)
+
+    cy.get('[data-qa="login-password"]').clear().type(password)
+
+    cy.get('[data-qa="login-button"]').click()
+
+    cy.get('form[action="/login"]')
+      .find('p[style="color: red;"]')
+      .should('be.visible')
+      .as('errorMessageLogin')
+
+    cy.get('@errorMessageLogin').should(
+      'contain.text',
+      'Your email or password is incorrect!'
+    )
   })
 })
-
-
