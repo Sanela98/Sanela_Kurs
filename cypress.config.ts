@@ -8,7 +8,7 @@ export default defineConfig({
   env: {
     credentials: {
       name: 'Aid',
-      lastName:'Hodzic',
+      lastName: 'Hodzic',
       password: 'Test123',
       address: 'Zmaja od Bosne',
     },

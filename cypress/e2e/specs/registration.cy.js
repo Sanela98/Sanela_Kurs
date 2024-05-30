@@ -5,7 +5,7 @@ import {
   password,
   name,
   loginPage,
-  LastName,
+  lastName,
   address,
 } from '../utils/initialize'
 
@@ -37,28 +37,28 @@ describe('Registration', () => {
     registrationPage.registrationForm.selectTitle({ titleValue: 'Mr' })
 
     registrationPage.registrationForm.inputNameShouldHaveValue({ name })
-    
+
     registrationPage.registrationForm.inputEmailShouldHaveValue({ email })
 
     registrationPage.registrationForm.inputPassword({ password })
 
-    registrationPage.registrationForm.selecDayOfBurth({ day: 13 })
+    registrationPage.registrationForm.selectDayOfBirth({ day: 13 })
 
-    registrationPage.registrationForm.selectMonthOfBurth({ Month: juli })
+    registrationPage.registrationForm.selectMonthOfBirth({ month: 'July' })
 
-    registrationPage.registrationForm.selectYearsOfBurth({ Year: 1997 })
+    registrationPage.registrationForm.selectYearOfBirth({ year: '1997' })
 
-    registrationPage.registrationForm.chekNewsleter()
+    registrationPage.registrationForm.checkNewsletter()
 
-    registrationPage.registrationForm.chekReceiveOffers()
+    registrationPage.registrationForm.checkReceiveOffers()
 
-    registrationPage.registrationForm.inputFirstName({ FirstName: name })
+    registrationPage.registrationForm.inputFirstName({ firstName: name })
 
-    registrationPage.registrationForm.inputLastName({ LastName })
+    registrationPage.registrationForm.inputLastName({ lastName })
 
-    registrationPage.registrationForm.inputCompany({ Companyname:'Qa' })
+    registrationPage.registrationForm.inputCompany({ companyName: 'QA' })
 
-   registrationPage.registrationForm.inputFirstAddress({ address })
+    registrationPage.registrationForm.inputFirstAddress({ address })
 
     cy.get('[data-qa="address2"]').clear().type('Zmaja od Bosne')
 
